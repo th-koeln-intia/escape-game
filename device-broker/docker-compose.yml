@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  node-red:
+    image: nodered/node-red-docker:slim
+    ports:
+        - 1880:1880
+    volumes:
+        - node-red_data:/data
+  zigbee2mqtt:
+    image: koenkk/zigbee2mqtt:arm32v6
+    volumes:
+        - zigbee2mqtt_config:/app/data
+    devices:
+        - "/dev/ttyACM0"
+  mqtt:
+    image: toke/mosquitto
+    container_name: mqtt
+ 
+volumes:
+  node-red_data: {}
+  zigbee2mqtt_config: {}
