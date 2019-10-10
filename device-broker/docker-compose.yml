@@ -20,13 +20,11 @@ services:
         - 9001:9001
     container_name: mqtt
     volumes:
-        - mosquitto_config:/mosquitto/config/mosquitto.conf
         - mosquitto_data:/mosquitto/data
         - mosquitto_log:/mosquitto/log
     
 volumes:
   node-red_data: {}
   zigbee2mqtt_config: {}
-  mosquitto_config: {}
   mosquitto_data: {}
   mosquitto_log: {}
