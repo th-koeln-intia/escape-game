@@ -7,12 +7,14 @@ services:
         - 1880:1880
     volumes:
         - node-red_data:/data
+    restart: always 
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:arm32v6
     volumes:
         - ./zigbee2mqtt_config:/app/data
     devices:
         - "/dev/ttyACM0"
+    restart: always 
   mqtt:
     image: eclipse-mosquitto
     ports:
@@ -22,7 +24,7 @@ services:
     volumes:
         - mosquitto_data:/mosquitto/data
         - mosquitto_log:/mosquitto/log
-    
+     restart: always 
 volumes:
   node-red_data: {}
   mosquitto_data: {}
