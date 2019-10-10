@@ -24,7 +24,7 @@ services:
     volumes:
         - mosquitto_data:/mosquitto/data
         - mosquitto_log:/mosquitto/log
-     restart: always 
+    restart: always 
 volumes:
   node-red_data: {}
   mosquitto_data: {}
