@@ -10,7 +10,7 @@ services:
   zigbee2mqtt:
     image: koenkk/zigbee2mqtt:arm32v6
     volumes:
-        - zigbee2mqtt_config:/app/data
+        - ./zigbee2mqtt_config:/app/data
     devices:
         - "/dev/ttyACM0"
   mqtt:
@@ -25,6 +25,5 @@ services:
     
 volumes:
   node-red_data: {}
-  zigbee2mqtt_config: {}
   mosquitto_data: {}
   mosquitto_log: {}
