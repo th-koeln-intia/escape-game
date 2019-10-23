@@ -1,0 +1,3 @@
+http://www.circuitbasics.com/how-to-set-up-a-keypad-on-an-arduino/
+https://create.arduino.cc/projecthub/search?q=keypad
+https://create.arduino.cc/projecthub/diy-hacking/arduino-keyless-door-lock-system-with-keypad-and-lcd-bcad2e?f=1
