@@ -1,10 +1,10 @@
 //#include <Wire.h>
 //#include <LiquidCrystal_I2C.h>
-#include <Keypad.h>
 #include <ESP8266WiFi.h>
-//#include <PubSubClient.h>
-//#include <string.h>
-//#include <ArduinoJson.h>
+#include <Keypad.h>
+#include <PubSubClient.h>
+#include <string.h>
+#include <ArduinoJson.h>
 
 #define Password_Length 5
 
@@ -45,6 +45,8 @@ WiFiClient espClient;
 const char* MQTT_BROKER = "192.168.43.245";
 const char* TOPIC = "keypad"; // Publish topic
 const char* TOPIC_SUB = "keypad/set"; // Subscribe topic
+
+PubSubClient client(espClient);
 
 const int capacity = JSON_OBJECT_SIZE(50);
 StaticJsonDocument<capacity> doc;
