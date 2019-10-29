@@ -1,5 +1,3 @@
-//#include <Wire.h>
-//#include <LiquidCrystal_I2C.h>
 #include <ESP8266WiFi.h>
 #include <Keypad.h>
 #include <PubSubClient.h>
@@ -28,12 +26,10 @@ char hexaKeys[ROWS][COLS] = {
   {'*', '0', '#', 'D'}
 };
 
-byte rowPins[ROWS] = {D3, D2, D1, D0};
-byte colPins[COLS] = {D7, D6, D5, D4};
+byte rowPins[ROWS] = {D7, D6, D5, D4};
+byte colPins[COLS] = {D3, D2, D1, D0};
 
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
-
-// LiquidCrystal_I2C lcd(0x21, 16, 2);
 
 // Configuration of WLAN
 const char* SSID = "intia2";
@@ -56,8 +52,6 @@ void setup() {
   setup_wifi();
   client.setServer(MQTT_BROKER, 1883);
   client.setCallback(callback);
-  //lcd.init();
-  //lcd.backlight();
   Serial.begin(115200);
   pinMode(signalPin, OUTPUT);
   Serial.println("Starting Keypad...");
@@ -65,6 +59,8 @@ void setup() {
 }
 
 void loop() {
+
+  Serial.println("Test serial");
   if (!client.connected()) {
     reconnect();
   }
@@ -76,6 +72,8 @@ void loop() {
   delay(200);                       // wait for a second
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   delay(200);                       // wait for a second
+
+  Serial.println("Waiting...!");
   }
     // if connection was acknowledged
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
@@ -83,24 +81,20 @@ void loop() {
   digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
   delay(2000);                       // wait for a second
 
-  //lcd.setCursor(0, 0);
-  //lcd.print("Enter password:");
+  Serial.println("Acknowledged!");
   //Serial.print("Enter password: ");
 
   customKey = customKeypad.getKey();
+  Serial.println("Custom Key: " + customKey);
   if (customKey) {
     data[data_count] = customKey;
-    //lcd.setCursor(data_count, 1);
-    //lcd.print(data[data_count]);
     Serial.print(data[data_count]);
     data_count++;
   }
   if (data_count == Password_Length - 1) {
-    //lcd.clear();
 
     if (!strcmp(data, pass))
     {
-      //lcd.print(“Correct”);
       Serial.println();
       Serial.println("Correct password");
       pass_is_correct = true;
@@ -114,7 +108,6 @@ void loop() {
     {
       if (!strcmp(data, master))
       {
-        //lcd.print(“Incorrect”);
         Serial.println();
         Serial.println("Please input the new password: ");
         for (i = 0; i < 4; i++)
@@ -125,8 +118,6 @@ void loop() {
             pass[i] = newKey;
             Serial.print(pass[i]);
           }
-          //lcd.setCursor(data_count,1);
-          //lcd.print(data[data_count]);
         }
         Serial.println();
         Serial.print("New password is: "); 
@@ -139,7 +130,6 @@ void loop() {
       }
       delay(1000);
     }
-    //lcd.clear();
     cleardata();
   }
 }
@@ -153,6 +143,7 @@ void cleardata() {
 
 void sendPasswordVerificationToMQTTBroker(bool isPassCorrect) {
   doc["pass_is_correct"] = isPassCorrect;
+  Serial.print("Passwort was sent!");
   
   char message[256];
   serializeJson(doc, message);
@@ -178,12 +169,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   if (strcmp(msg, "{\"ack\":1}") == 0) {
      Serial.print("Acknowledged");
      waitForACK=0;
-    //digitalWrite(ledPin, HIGH);
   }
   else if (strcmp(msg, "{\"ack\":0}") == 0) {
     Serial.print("not Acknowledged");
     waitForACK=0;
-    //digitalWrite(ledPin, LOW);
   }
 }
 
