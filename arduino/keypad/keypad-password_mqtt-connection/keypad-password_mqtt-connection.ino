@@ -49,9 +49,11 @@ StaticJsonDocument<capacity> doc;
 int waitForACK = 0;
 
 void setup() {
+  
   setup_wifi();
   client.setServer(MQTT_BROKER, 1883);
   client.setCallback(callback);
+  
   Serial.begin(115200);
   pinMode(signalPin, OUTPUT);
   Serial.println("Starting Keypad...");
@@ -59,13 +61,11 @@ void setup() {
 }
 
 void loop() {
-
-  Serial.println("Test serial");
   if (!client.connected()) {
     reconnect();
   }
   client.loop();
-
+  
   if(waitForACK) {
 // if connection is still waiting to be acknowledged
   digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
@@ -75,22 +75,14 @@ void loop() {
 
   Serial.println("Waiting...!");
   }
-    // if connection was acknowledged
-  digitalWrite(LED_BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)
-  delay(2000);                       // wait for a second
-  digitalWrite(LED_BUILTIN, LOW);    // turn the LED off by making the voltage LOW
-  delay(2000);                       // wait for a second
-
-  Serial.println("Acknowledged!");
-  //Serial.print("Enter password: ");
-
+  
   customKey = customKeypad.getKey();
-  Serial.println("Custom Key: " + customKey);
-  if (customKey) {
+  if (customKey != NULL) {
     data[data_count] = customKey;
     Serial.print(data[data_count]);
     data_count++;
   }
+  
   if (data_count == Password_Length - 1) {
 
     if (!strcmp(data, pass))
