@@ -75,7 +75,6 @@ void loop() {
 
   Serial.println("Waiting...!");
   }
-  
   customKey = customKeypad.getKey();
   if (customKey != NULL) {
     data[data_count] = customKey;
@@ -135,7 +134,7 @@ void cleardata() {
 
 void sendPasswordVerificationToMQTTBroker(bool isPassCorrect) {
   doc["pass_is_correct"] = isPassCorrect;
-  Serial.print("Passwort was sent!");
+  Serial.println("Passwort was sent!");
   
   char message[256];
   serializeJson(doc, message);
