@@ -9,7 +9,7 @@
 int signalPin = 12, i = 0;
 
 char data[Password_Length];
-char pass[Password_Length] = "1111";
+char pass[Password_Length] = "1916";
 char master[Password_Length] = "####";
 byte data_count = 0;
 bool pass_is_correct = false;
@@ -88,9 +88,9 @@ void loop() {
     {
       Serial.println();
       Serial.println("Correct password");
+      strncpy(pass, "5367", sizeof(pass));
       pass_is_correct = true;
       sendPasswordVerificationToMQTTBroker(pass_is_correct);
-      
       digitalWrite(signalPin, HIGH);
       delay(2000);
       digitalWrite(signalPin, LOW);
