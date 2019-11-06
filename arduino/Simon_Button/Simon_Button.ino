@@ -8,7 +8,7 @@
 
 const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
-const char* MQTT_BROKER = "openhabianpi.local";
+const char* MQTT_BROKER = "192.168.1.102";
 const char* TOPIC = "simon"; // Toppic an das gesendet wird
 
 const char* TOPIC_SUB = "simon/set"; // Topic das Oboniert wird
@@ -70,11 +70,131 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
     msg[i] = (char)payload[i];
   }
+  String msg_payload = msg;
   Serial.println();
 
   msg[length] = '\0';
   Serial.println(msg);
+  digitalWrite(ledGreen, LOW);
+  digitalWrite(ledBlue, LOW);
+  digitalWrite(ledYellow, LOW);
+  digitalWrite(ledRed, LOW);
+  delay(500);
+   if (strcmp(msg, "green") == 0) {
+    digitalWrite(ledGreen, HIGH);
+     delay(1000);
+     digitalWrite(ledGreen, LOW);
+  }else if (strcmp(msg, "green blue") == 0) {
+    digitalWrite(ledGreen, HIGH);
+     delay(1000);
+     digitalWrite(ledGreen, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+  }else if (strcmp(msg, "green blue blue") == 0) {
+   digitalWrite(ledGreen, HIGH);
+     delay(1000);
+     digitalWrite(ledGreen, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+  }else if (strcmp(msg, "green blue blue yellow") == 0) {
+    digitalWrite(ledGreen, HIGH);
+     delay(1000);
+     digitalWrite(ledGreen, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+     delay(500);
+     digitalWrite(ledYellow, HIGH);
+     delay(1000);
+     digitalWrite(ledYellow, LOW);
+  }else if (strcmp(msg, "green blue blue yellow red") == 0) {
+      digitalWrite(ledGreen, HIGH);
+     delay(1000);
+     digitalWrite(ledGreen, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+     delay(500);
+     digitalWrite(ledBlue, HIGH);
+     delay(1000);
+     digitalWrite(ledBlue, LOW);
+     delay(500);
+     digitalWrite(ledYellow, HIGH);
+     delay(1000);
+     digitalWrite(ledYellow, LOW);
+     delay(500);
+     digitalWrite(ledRed, HIGH);
+     delay(1000);
+     digitalWrite(ledRed, LOW);
+  }else if (strcmp(msg, "solved") == 0) {
+      delay(300);
+     digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+     delay(300);
+     digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+     delay(300);
+       digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+     delay(300);
+       digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+     delay(300);
+       digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+  }
 
+  
+  /*
   if (strcmp(msg, "on") == 0) {
     digitalWrite(ledStatus, HIGH);
   }
@@ -105,6 +225,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   else if (strcmp(msg, "offGreen") == 0) {
     digitalWrite(ledGreen, LOW);
   }
+  */
 }
 
 void setup_wifi() {
@@ -201,7 +322,7 @@ void button() {
 
       buttonStateG = LOW;
       Serial.println(buttonGreen);
-      digitalWrite(ledBlue, HIGH);
+      digitalWrite(ledGreen, HIGH);
 
       char message[256];
       serializeJson(doc, message);
@@ -216,13 +337,16 @@ void button() {
       buttonStateG = HIGH;
 
       // Elemente werden an ein Json übergeben das später gesendet wird
+      /*
       doc["id"] = "off";
       doc["action"] = "release";
       // Nachricht wird gepackt und an MQTT gesendet.
       char message[256];
       serializeJson(doc, message);
       Serial.println(message);
+      
       client.publish(TOPIC, message);
+      */
       delay(100); // Verzögerung um den Button zu entprellen
       digitalWrite(ledRed, LOW);
       digitalWrite(ledYellow, LOW);
