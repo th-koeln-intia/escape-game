@@ -6,13 +6,14 @@
 #include <ArduinoJson.h>
 
 // Configuration of WLAN
-const char* SSID = "intia";
+const char* SSID = "intia2";
 const char* PSK = "BuntesLicht10";
 
 WiFiClient espClient;
 
 //Configuration for MQTT
-const char* MQTT_BROKER = "192.168.1.100";
+//const char* MQTT_BROKER = "192.168.1.103";
+const char* MQTT_BROKER = "192.168.43.245";
 const char* TOPIC = "rfid-reader"; // Publish topic
 const char* TOPIC_SUB = "rfid-reader/set"; // Subscribe topic
 
