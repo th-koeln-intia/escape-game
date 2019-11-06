@@ -9,7 +9,7 @@
 int signalPin = 12, i = 0;
 
 char data[Password_Length];
-char pass[Password_Length] = "1916";
+char pass[Password_Length] = "1111";
 char master[Password_Length] = "####";
 byte data_count = 0;
 bool pass_is_correct = false;
@@ -32,13 +32,14 @@ byte colPins[COLS] = {D3, D2, D1, D0};
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 // Configuration of WLAN
-const char* SSID = "intia";
+const char* SSID = "intia2";
 const char* PSK = "BuntesLicht10";
 
 WiFiClient espClient;
 
 //Configuration for MQTT
-const char* MQTT_BROKER = "192.168.1.103";
+//const char* MQTT_BROKER = "192.168.1.103";
+const char* MQTT_BROKER = "192.168.43.245";
 const char* TOPIC = "keypad"; // Publish topic
 const char* TOPIC_SUB = "keypad/set"; // Subscribe topic
 
