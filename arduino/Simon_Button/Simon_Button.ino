@@ -6,9 +6,10 @@
 #include <string.h>
 #include <ArduinoJson.h>
 
-const char* SSID = "intia";
+const char* SSID = "intia2";
 const char* PSK = "BuntesLicht10";
-const char* MQTT_BROKER = "openhabianpi.local";
+// const char* MQTT_BROKER = "openhabianpi.local";
+const char* MQTT_BROKER = "192.168.43.245";
 const char* TOPIC = "simon"; // Toppic an das gesendet wird
 
 const char* TOPIC_SUB = "simon/set"; // Topic das Oboniert wird
