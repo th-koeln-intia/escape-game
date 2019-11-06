@@ -32,13 +32,13 @@ byte colPins[COLS] = {D3, D2, D1, D0};
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 // Configuration of WLAN
-const char* SSID = "intia2";
+const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
 
 WiFiClient espClient;
 
 //Configuration for MQTT
-const char* MQTT_BROKER = "192.168.43.245";
+const char* MQTT_BROKER = "192.168.1.103";
 const char* TOPIC = "keypad"; // Publish topic
 const char* TOPIC_SUB = "keypad/set"; // Subscribe topic
 
