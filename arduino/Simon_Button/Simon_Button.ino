@@ -8,7 +8,7 @@
 
 const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
-const char* MQTT_BROKER = "192.168.1.102";
+const char* MQTT_BROKER = "192.168.43.184";
 const char* TOPIC = "simon"; // Toppic an das gesendet wird
 
 const char* TOPIC_SUB = "simon/set"; // Topic das Oboniert wird
@@ -72,128 +72,26 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   String msg_payload = msg;
   Serial.println();
-
-  msg[length] = '\0';
-  Serial.println(msg);
-  digitalWrite(ledGreen, LOW);
-  digitalWrite(ledBlue, LOW);
-  digitalWrite(ledYellow, LOW);
-  digitalWrite(ledRed, LOW);
-  delay(500);
-   if (strcmp(msg, "green") == 0) {
-    digitalWrite(ledGreen, HIGH);
-     delay(1000);
-     digitalWrite(ledGreen, LOW);
-  }else if (strcmp(msg, "green blue") == 0) {
-    digitalWrite(ledGreen, HIGH);
-     delay(1000);
-     digitalWrite(ledGreen, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-  }else if (strcmp(msg, "green blue blue") == 0) {
-   digitalWrite(ledGreen, HIGH);
-     delay(1000);
-     digitalWrite(ledGreen, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-  }else if (strcmp(msg, "green blue blue yellow") == 0) {
-    digitalWrite(ledGreen, HIGH);
-     delay(1000);
-     digitalWrite(ledGreen, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-     delay(500);
-     digitalWrite(ledYellow, HIGH);
-     delay(1000);
-     digitalWrite(ledYellow, LOW);
-  }else if (strcmp(msg, "green blue blue yellow red") == 0) {
-      digitalWrite(ledGreen, HIGH);
-     delay(1000);
-     digitalWrite(ledGreen, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-     delay(500);
-     digitalWrite(ledBlue, HIGH);
-     delay(1000);
-     digitalWrite(ledBlue, LOW);
-     delay(500);
-     digitalWrite(ledYellow, HIGH);
-     delay(1000);
-     digitalWrite(ledYellow, LOW);
-     delay(500);
-     digitalWrite(ledRed, HIGH);
-     delay(1000);
-     digitalWrite(ledRed, LOW);
-  }else if (strcmp(msg, "solved") == 0) {
-      delay(300);
-     digitalWrite(ledGreen, HIGH);
-     digitalWrite(ledBlue, HIGH);
-     digitalWrite(ledYellow, HIGH);
-     digitalWrite(ledRed, HIGH);
-     delay(300);
-      digitalWrite(ledGreen, LOW);
-     digitalWrite(ledBlue, LOW);
-     digitalWrite(ledYellow, LOW);
-     digitalWrite(ledRed, LOW);
-     delay(300);
-     digitalWrite(ledGreen, HIGH);
-     digitalWrite(ledBlue, HIGH);
-     digitalWrite(ledYellow, HIGH);
-     digitalWrite(ledRed, HIGH);
-     delay(300);
-      digitalWrite(ledGreen, LOW);
-     digitalWrite(ledBlue, LOW);
-     digitalWrite(ledYellow, LOW);
-     digitalWrite(ledRed, LOW);
-     delay(300);
-       digitalWrite(ledGreen, HIGH);
-     digitalWrite(ledBlue, HIGH);
-     digitalWrite(ledYellow, HIGH);
-     digitalWrite(ledRed, HIGH);
-     delay(300);
-      digitalWrite(ledGreen, LOW);
-     digitalWrite(ledBlue, LOW);
-     digitalWrite(ledYellow, LOW);
-     digitalWrite(ledRed, LOW);
-     delay(300);
-       digitalWrite(ledGreen, HIGH);
-     digitalWrite(ledBlue, HIGH);
-     digitalWrite(ledYellow, HIGH);
-     digitalWrite(ledRed, HIGH);
-     delay(300);
-      digitalWrite(ledGreen, LOW);
-     digitalWrite(ledBlue, LOW);
-     digitalWrite(ledYellow, LOW);
-     digitalWrite(ledRed, LOW);
-     delay(300);
-       digitalWrite(ledGreen, HIGH);
-     digitalWrite(ledBlue, HIGH);
-     digitalWrite(ledYellow, HIGH);
-     digitalWrite(ledRed, HIGH);
-     delay(300);
-      digitalWrite(ledGreen, LOW);
-     digitalWrite(ledBlue, LOW);
-     digitalWrite(ledYellow, LOW);
-     digitalWrite(ledRed, LOW);
-  }
-
   
+  resetLeds();
+  
+  msg[length] = '\0';
+  char *token=strtok(msg," ");
+   while( token != 0 ) {
+      printf( "Next color to show: %s\n", token );
+      if(strcmp(token, "green") == 0) {
+        showColor(ledGreen);
+      }else if (strcmp(token, "blue") == 0) {
+          showColor(ledBlue);
+      }else if (strcmp(token, "yellow") == 0) {
+          showColor(ledYellow);
+      }else if (strcmp(token, "red") == 0) {
+          showColor(ledRed);
+      }else if (strcmp(token, "solved") == 0) {
+          solved();
+      }
+      token = strtok(0, " ");
+   }
   /*
   if (strcmp(msg, "on") == 0) {
     digitalWrite(ledStatus, HIGH);
@@ -227,6 +125,35 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
   */
 }
+void resetLeds(){
+  //Alle leds ausschalten uns kurz warten
+  digitalWrite(ledGreen, LOW);
+  digitalWrite(ledBlue, LOW);
+  digitalWrite(ledYellow, LOW);
+  digitalWrite(ledRed, LOW);
+}
+void showColor(int buttonColor){
+  delay(500);
+  digitalWrite(buttonColor, HIGH);
+  delay(1000);
+  digitalWrite(buttonColor, LOW);
+}
+void solved(){
+  for(int i = 0; i < 5; i++) {
+     delay(300);
+     digitalWrite(ledGreen, HIGH);
+     digitalWrite(ledBlue, HIGH);
+     digitalWrite(ledYellow, HIGH);
+     digitalWrite(ledRed, HIGH);
+     delay(300);
+      digitalWrite(ledGreen, LOW);
+     digitalWrite(ledBlue, LOW);
+     digitalWrite(ledYellow, LOW);
+     digitalWrite(ledRed, LOW);
+  }
+}
+
+
 
 void setup_wifi() {
   delay(10);
