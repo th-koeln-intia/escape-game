@@ -25,6 +25,7 @@ const int ledStatus =  D8;      // LED-Pin
 
 const int ledButton =  D2;      // LED-Pin
 const int button = D5;          // Button-Pinconst
+const int buzzer= D6;
 int buttonState = 1;            // Status des Buttons
 
 // Variabeln um die Zeit zu berechnen
@@ -34,6 +35,7 @@ unsigned long pressTime;
 void setup() {
   pinMode(ledStatus, OUTPUT);
   pinMode(ledButton, OUTPUT);
+   pinMode(buzzer, OUTPUT);
   pinMode(button, INPUT_PULLUP);
   Serial.begin(115200);
 
@@ -56,29 +58,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
   String msg_payload = msg;
   Serial.println();
   
-  resetLeds();
-  
-  msg[length] = '\0';
-  char *token=strtok(msg," ");
-   while( token != 0 ) {
-      printf( "Next color to show: %s\n", token );
-      if(strcmp(token, "green") == 0) {
-        showColor(ledButton);
-      }else if (strcmp(token, "blue") == 0) {
-          showColor(ledButton);
-      }
-      token = strtok(0, " ");
-   }
-}
-void resetLeds(){
-  //Alle leds ausschalten uns kurz warten
-  digitalWrite(ledButton, LOW);
-}
-void showColor(int buttonColor){
-  delay(500);
-  digitalWrite(buttonColor, HIGH);
-  delay(1000);
-  digitalWrite(buttonColor, LOW);
+  digitalWrite(buzzer, HIGH);
+  delay(1000); // Verzögerung um den Button zu entprellen
+  digitalWrite(buzzer, LOW);
 }
 
 void setup_wifi() {
@@ -132,10 +114,10 @@ void checkButton() {
       Serial.println(message);
       client.publish(TOPIC, message);
 
-      delay(100); // Verzögerung um den Button zu entprellen
+      delay(200); // Verzögerung um den Button zu entprellen
     }else {
+      
       buttonState = HIGH;
-
       // Elemente werden an ein Json übergeben das später gesendet wird
       
       doc["id"] = "off";
@@ -146,8 +128,8 @@ void checkButton() {
       Serial.println(message);
       
       client.publish(TOPIC, message);
-      
-      delay(100); // Verzögerung um den Button zu entprellen
+
+      delay(200); // Verzögerung um den Button zu entprellen
       digitalWrite(ledButton, LOW);
     }
   }
