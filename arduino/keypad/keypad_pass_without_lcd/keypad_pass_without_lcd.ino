@@ -29,13 +29,13 @@ byte colPins[COLS] = {D3, D2, D1, D0};
 
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
-// LiquidCrystal_I2C lcd(0x21, 16, 2);
+const int vibrating_motor = D8;
 
 void setup() {
-  //lcd.init();
-  //lcd.backlight();
   Serial.begin(115200);
   pinMode(signalPin, OUTPUT);
+  pinMode(vibrating_motor, OUTPUT);
+
 }
 
 void loop() {
@@ -47,8 +47,6 @@ void loop() {
   customKey = customKeypad.getKey();
   if (customKey) {
     data[data_count] = customKey;
-    //lcd.setCursor(data_count, 1);
-    //lcd.print(data[data_count]);
     Serial.print(data[data_count]);
     data_count++;
   }
@@ -91,6 +89,9 @@ void loop() {
       {
         Serial.println();
         Serial.println("Wrong password");
+        digitalWrite(vibrating_motor, HIGH);
+        delay(1000);
+        digitalWrite(vibrating_motor, LOW);
       }
       delay(1000);
     }

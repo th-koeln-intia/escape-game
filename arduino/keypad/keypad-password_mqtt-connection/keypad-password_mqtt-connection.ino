@@ -9,7 +9,7 @@
 int signalPin = 12, i = 0;
 
 char data[Password_Length];
-char pass[Password_Length] = "1111";
+char pass[Password_Length] = "5367";
 char master[Password_Length] = "####";
 byte data_count = 0;
 bool pass_is_correct = false;
@@ -32,14 +32,13 @@ byte colPins[COLS] = {D3, D2, D1, D0};
 Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS);
 
 // Configuration of WLAN
-const char* SSID = "intia2";
+const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
 
 WiFiClient espClient;
 
 //Configuration for MQTT
-//const char* MQTT_BROKER = "192.168.1.103";
-const char* MQTT_BROKER = "192.168.43.245";
+const char* MQTT_BROKER = "192.168.1.101";
 const char* TOPIC = "keypad"; // Publish topic
 const char* TOPIC_SUB = "keypad/set"; // Subscribe topic
 
@@ -49,6 +48,8 @@ const int capacity = JSON_OBJECT_SIZE(50);
 StaticJsonDocument<capacity> doc;
 int waitForACK = 0;
 
+const int vibrating_motor = D8;
+
 void setup() {
   
   setup_wifi();
@@ -57,6 +58,7 @@ void setup() {
   
   Serial.begin(115200);
   pinMode(signalPin, OUTPUT);
+  pinMode(vibrating_motor, OUTPUT);
   Serial.println("Starting Keypad...");
   pinMode(LED_BUILTIN, OUTPUT); // For validating connection with broker
 }
@@ -89,7 +91,7 @@ void loop() {
     {
       Serial.println();
       Serial.println("Correct password");
-      strncpy(pass, "5367", sizeof(pass));
+      //strncpy(pass, "5367", sizeof(pass));
       pass_is_correct = true;
       sendPasswordVerificationToMQTTBroker(pass_is_correct);
       digitalWrite(signalPin, HIGH);
@@ -119,6 +121,9 @@ void loop() {
       {
         Serial.println();
         Serial.println("Wrong password");
+        digitalWrite(vibrating_motor, HIGH);
+        delay(1000);
+        digitalWrite(vibrating_motor, LOW);
       }
       delay(1000);
     }
