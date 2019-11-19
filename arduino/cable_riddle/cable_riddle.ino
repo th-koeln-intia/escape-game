@@ -10,7 +10,7 @@ const char* PSK = "BuntesLicht10";
 WiFiClient espClient;
 
 //Configuration for MQTT
-const char* MQTT_BROKER = "192.168.43.184";
+const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "cable-riddle"; // Publish topic
 const char* TOPIC_SUB = "cable-riddle/set"; // Subscribe topic
 
@@ -105,7 +105,7 @@ void setup_wifi() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(SSID);
-
+  WiFi.hostname("Cable-Riddle");
   WiFi.begin(SSID, PSK);
 
   while (WiFi.status() != WL_CONNECTED) {

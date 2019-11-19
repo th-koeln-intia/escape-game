@@ -8,7 +8,7 @@
 
 const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
-const char* MQTT_BROKER = "192.168.43.184";
+const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "morse"; // Toppic an das gesendet wird
 
 const char* TOPIC_SUB = "morse/set"; // Topic das Oboniert wird
@@ -68,7 +68,7 @@ void setup_wifi() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(SSID);
-
+  WiFi.hostname("Morse-Code");
   WiFi.begin(SSID, PSK);
 
   while (WiFi.status() != WL_CONNECTED) {
