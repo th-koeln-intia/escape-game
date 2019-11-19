@@ -18,7 +18,6 @@ PubSubClient client(espClient);
 
 const int capacity = JSON_OBJECT_SIZE(50);
 StaticJsonDocument<capacity> doc;
-int waitForACK = 0;
 
 // Cable pins
 const int cable_amount=7;
@@ -41,26 +40,23 @@ void setup() {
 }
 
 void loop() {
-  
   if (!client.connected()) {
+    delay(500);
     reconnect();
   }
   client.loop();
-
-  if(waitForACK){
-    Serial.println("Waiting.....");
-  }
   
-  cable_sum = calcCables();
-  Serial.println(cable_sum);
-  doc["value"]=cable_sum;
-
-  char message[256];
-  serializeJson(doc, message);
-  Serial.println(message);
-  client.publish(TOPIC, message);
-  waitForACK = 1;
-  delay(1000);
+  if(calcCables() != cable_sum){
+     cable_sum = calcCables();
+    Serial.println(cable_sum);
+    doc["value"]=cable_sum;
+  
+    char message[256];
+    serializeJson(doc, message);
+    Serial.println(message);
+    client.publish(TOPIC, message);
+    delay(1000);
+  }
 }
 
 int calcCables(){
@@ -88,17 +84,6 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   msg[length] = '\0';
   Serial.println(msg);
-
-  if (strcmp(msg, "{\"ack\":1}") == 0) {
-     Serial.print("Acknowledged");
-     waitForACK=0;
-    //digitalWrite(ledPin, HIGH);
-  }
-  else if (strcmp(msg, "{\"ack\":0}") == 0) {
-    Serial.print("not Acknowledged");
-    waitForACK=0;
-    //digitalWrite(ledPin, LOW);
-  }
 }
 void setup_wifi() {
   delay(10);

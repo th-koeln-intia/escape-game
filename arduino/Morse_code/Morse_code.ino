@@ -138,6 +138,7 @@ void checkButton() {
 // ToDO: Die Buttonsteuerung in eine eigene Funktion packen.
 void loop() {
   if (!client.connected()) {
+    delay(500);
     reconnect();
   }
   client.loop();

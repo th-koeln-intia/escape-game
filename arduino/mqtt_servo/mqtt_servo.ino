@@ -8,7 +8,7 @@
 
 const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
-const char* MQTT_BROKER = "192.168.137.46";
+const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "servo/get"; // Toppic an das gesendet wird
 
 const char* TOPIC_SUB = "servo/set"; // Topic das aboniert wird
