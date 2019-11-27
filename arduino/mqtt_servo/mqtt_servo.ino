@@ -10,9 +10,12 @@ const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
 const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "servo/get"; // Toppic an das gesendet wird
+const char* CLIENT_ID ="Kiste1"; // Bitte für jeden ESP eine individuele ClientID festlegen
+char wiFiHostname[ ] = "Kiste1"; // Gerätename
 
 const char* TOPIC_SUB = "servo/set"; // Topic das aboniert wird
 //Wird an dieses Topic "open" gesendet so öffnet sich die Kiste. "close" zum schließen.
+
 
 WiFiClient espClient;
 PubSubClient client(espClient);
@@ -76,6 +79,7 @@ void setup_wifi() {
   Serial.println(SSID);
 
   WiFi.begin(SSID, PSK);
+  wifi_station_set_hostname(wiFiHostname);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -91,7 +95,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Reconnecting MQTT...");
-    if (!client.connect("ESP8266Client")) {
+    if (!client.connect(CLIENT_ID)) {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying in 5 seconds");
