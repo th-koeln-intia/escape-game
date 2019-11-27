@@ -177,7 +177,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Reconnecting MQTT...");
-    if (!client.connect("ESP8266Client")) {
+    if (!client.connect("simon_button")) {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying in 5 seconds");

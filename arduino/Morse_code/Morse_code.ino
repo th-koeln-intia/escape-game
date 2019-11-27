@@ -28,6 +28,15 @@ const int button = D5;          // Button-Pinconst
 const int buzzer= D6;
 int buttonState = 1;            // Status des Buttons
 
+// Zu kontrollierender Code
+// 0 -> Kurz, 1 -> Lang
+int code[] ={0,0,0,0,0,1,0,1,0,0,0,1,0,0,1,1,1};
+int code_length=17;
+int current_code=0;
+int counter=0;
+
+
+
 // Variabeln um die Zeit zu berechnen
 unsigned long startTime;
 unsigned long pressTime;
@@ -55,12 +64,16 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
     msg[i] = (char)payload[i];
   }
-  String msg_payload = msg;
   Serial.println();
-  
+  msg[length] = '\0';
+  if(strcmp(msg, "reset") == 0){
+    counter=0;
+    Serial.println("RESET");
+  }
+    /*
   digitalWrite(buzzer, HIGH);
   delay(1000); // Verzögerung um den Button zu entprellen
-  digitalWrite(buzzer, LOW);
+  digitalWrite(buzzer, LOW);*/
 }
 
 void setup_wifi() {
@@ -85,7 +98,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Reconnecting MQTT...");
-    if (!client.connect("ESP8266Client")) {
+    if (!client.connect("morse_code")) {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying in 5 seconds");
@@ -100,35 +113,53 @@ void checkButton() {
   if (buttonState != digitalRead(button)) {
     //Butten ist nicht gedrückt. Die Zeit wird berechnet
     if (digitalRead(button) != HIGH) {
-
-      buttonState = digitalRead(button);
-      doc["id"] = "button";
-      doc["action"] = "pressed";
-
+      startTime = millis();
       buttonState = LOW;
-      Serial.println(button);
       digitalWrite(ledButton, HIGH);
-
-      char message[256];
-      serializeJson(doc, message);
-      Serial.println(message);
-      client.publish(TOPIC, message);
-
       delay(200); // Verzögerung um den Button zu entprellen
     }else {
-      
+      pressTime = millis() - startTime;
+      current_code=code[counter];
+      Serial.print("Current code: ");
+      Serial.print(current_code);
+      Serial.print(" Presstime: ");
+      Serial.print(pressTime);
       buttonState = HIGH;
-      // Elemente werden an ein Json übergeben das später gesendet wird
+      if(current_code==1 && pressTime > 2000){
+        Serial.print(" Erkannt: ");
+        Serial.println("LONG");
+        counter++;
+      }else if(current_code==0 && pressTime <= 2000){
+        Serial.print(" Erkannt: ");
+        Serial.println("SHORT");
+        counter++;
+      }else{
+        Serial.print(" Erkannt: ");
+        Serial.print("Fehler");
+         Serial.print(" Sollte: ");
+        Serial.println(current_code);
+        digitalWrite(buzzer, HIGH);
+        delay(2000); // Verzögerung um den Button zu entprellen
+        digitalWrite(buzzer, LOW);
+      }
       
-      doc["id"] = "off";
-      doc["action"] = "release";
-      // Nachricht wird gepackt und an MQTT gesendet.
-      char message[256];
-      serializeJson(doc, message);
-      Serial.println(message);
-      
-      client.publish(TOPIC, message);
-
+      Serial.print(counter);
+      Serial.print(" von ");
+      Serial.println(code_length);
+      if(counter == code_length){
+        Serial.println("Fertig");
+        // Elemente werden an ein Json übergeben das später gesendet wird
+        doc["id"] = "morse";
+        doc["action"] = "solved";
+        // Nachricht wird gepackt und an MQTT gesendet.
+        char message[256];
+        serializeJson(doc, message);
+        Serial.println(message);
+        
+        client.publish(TOPIC, message);
+        delay(20000);
+        counter=0;
+      }
       delay(200); // Verzögerung um den Button zu entprellen
       digitalWrite(ledButton, LOW);
     }
