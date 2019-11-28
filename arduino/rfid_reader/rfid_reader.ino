@@ -6,14 +6,14 @@
 #include <ArduinoJson.h>
 
 // Configuration of WLAN
-const char* SSID = "intia2";
+const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
 
 WiFiClient espClient;
 
 //Configuration for MQTT
-//const char* MQTT_BROKER = "192.168.1.103";
-const char* MQTT_BROKER = "192.168.43.245";
+//const char* MQTT_BROKER = "intia.local";
+const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "rfid-reader"; // Publish topic
 const char* TOPIC_SUB = "rfid-reader/set"; // Subscribe topic
 
@@ -113,7 +113,7 @@ void setup_wifi() {
   Serial.println();
   Serial.print("Connecting to ");
   Serial.println(SSID);
-
+  WiFi.hostname("RFID-reader");
   WiFi.begin(SSID, PSK);
 
   while (WiFi.status() != WL_CONNECTED) {
@@ -129,7 +129,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Reconnecting MQTT...");
-    if (!client.connect("ESP8266Client")) {
+    if (!client.connect("rfid-reader")) {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying in 5 seconds");
