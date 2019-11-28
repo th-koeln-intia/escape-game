@@ -38,7 +38,8 @@ const char* PSK = "BuntesLicht10";
 WiFiClient espClient;
 
 //Configuration for MQTT
-const char* MQTT_BROKER = "192.168.1.101";
+//const char* MQTT_BROKER = "192.168.137.195";
+const char* MQTT_BROKER = "intia.local";
 const char* TOPIC = "keypad"; // Publish topic
 const char* TOPIC_SUB = "keypad/set"; // Subscribe topic
 
@@ -103,19 +104,12 @@ void loop() {
       if (!strcmp(data, master))
       {
         Serial.println();
-        Serial.println("Please input the new password: ");
-        for (i = 0; i < 4; i++)
-        {
-          newKey = customKeypad.waitForKey();
-          if (newKey)
-          {
-            pass[i] = newKey;
-            Serial.print(pass[i]);
-          }
-        }
-        Serial.println();
-        Serial.print("New password is: "); 
+        strncpy(pass, "1916", sizeof(pass));
+        Serial.print("Password resetted to: "); 
         Serial.println(pass);
+        digitalWrite(vibrating_motor, HIGH);
+        delay(4000);
+        digitalWrite(vibrating_motor, LOW);
       }
       else
       {
@@ -195,7 +189,7 @@ void setup_wifi() {
 void reconnect() {
   while (!client.connected()) {
     Serial.println("Reconnecting MQTT...");
-    if (!client.connect("ESP8266Client")) {
+    if (!client.connect("ESPKeypad")) {
       Serial.print("failed, rc=");
       Serial.print(client.state());
       Serial.println(" retrying in 5 seconds");
