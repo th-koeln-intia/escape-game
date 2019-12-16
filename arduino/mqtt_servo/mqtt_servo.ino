@@ -9,11 +9,11 @@
 const char* SSID = "intia";
 const char* PSK = "BuntesLicht10";
 const char* MQTT_BROKER = "intia.local";
-const char* TOPIC = "servo/get"; // Toppic an das gesendet wird
-const char* CLIENT_ID ="Kiste1"; // Bitte für jeden ESP eine individuele ClientID festlegen
-char wiFiHostname[ ] = "Kiste1"; // Gerätename
+const char* TOPIC = "magischeschriftkiste/get"; // Toppic an das gesendet wird
+const char* CLIENT_ID ="KisteMagischeSchrift"; // Bitte für jeden ESP eine individuele ClientID festlegen
+char wiFiHostname[ ] = "KisteMagischeSchrift"; // Gerätename
 
-const char* TOPIC_SUB = "servo/set"; // Topic das aboniert wird
+const char* TOPIC_SUB = "magischeschriftkiste/set"; // Topic das aboniert wird
 //Wird an dieses Topic "open" gesendet so öffnet sich die Kiste. "close" zum schließen.
 
 
