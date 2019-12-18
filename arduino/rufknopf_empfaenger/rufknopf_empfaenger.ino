@@ -63,6 +63,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   kuechenRuf = true;
   waeschereiRuf = false;
+  empfangKnopf = 0;
   // hausreinigungRuf = true;
 
   msg[length] = '\0';
@@ -156,6 +157,7 @@ void loop() {
           
     client.publish(TOPIC, message);
     kuechenRuf = false;
+    empfangKnopf = 0;
     delay(100);
     
   } else if (kuechenRuf == true) {
