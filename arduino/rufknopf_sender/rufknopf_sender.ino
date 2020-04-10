@@ -1,3 +1,17 @@
+/** User Story: 
+*       Als Qualifikant in einem Arbeitsbereich,
+*       möchte ich die Anleiterin rufen können,
+*       damit ich sie im Notfall schneller finde, meine wertvolle Arbeitszeit besser einsetzen kann und andere nicht bei der Arbeit störe.
+*
+*   Akzeptanzkriterien:
+*      Qualifikant hat Epilepsie. 
+*      Qualifikant drückt auf Rufknopf. 
+*      Rufknopf sendet Signal an Anleiterin. 
+*      Runknopf flackert nur langsam beim Qualifikanten. 
+*      Anleiterin bestätigt den Ruf. 
+*      Rufknopf leuchtet durchgehend beim Qualifikanten.
+*/
+
 // Dieses Skript sendet den State eines Buttons mit dauer wie lange dieser gedrückt wurde.
 // Zusätzlich gibt es eine LED die ebenfalls über MQTT gesteuert werden kann
 
