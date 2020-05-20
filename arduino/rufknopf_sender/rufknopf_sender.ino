@@ -12,9 +12,6 @@
 *      Rufknopf leuchtet durchgehend beim Qualifikanten.
 */
 
-// Dieses Skript sendet den State eines Buttons mit dauer wie lange dieser gedrückt wurde.
-// Zusätzlich gibt es eine LED die ebenfalls über MQTT gesteuert werden kann
-
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include <string.h>
