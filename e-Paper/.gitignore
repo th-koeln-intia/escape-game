@@ -1,0 +1,4 @@
+/src/*.pyc
+/src/*.pyo
+/src/__pycache__/
+/rpi_epd2in7/
