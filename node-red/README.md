@@ -5,7 +5,7 @@
 Rufe den Node-RED Workspace auf. Falls an der Installation von Node-RED nichts geändert wurde, läuft dieser über Port 1880. \
 Klicke auf das Menü oben rechts und wähle Import aus. \
 Klicke auf "Datei für Import auswählen" und wähle die Datei "escape-game_komplett.json" aus. Durch einen Klick auf Import wird alles eingefügt. \
-Falls nun noch Module fehlen werden diese von Node-RED angezeigt./
+Falls nun noch Module fehlen werden diese von Node-RED angezeigt. \
 Über das Menü oben rechts und der Auswahl "Palette verwalten" können diese hinzugefügt werden. Dafür auf Installation klicken und die erforderten Module installieren.
 
 ## ZigBee2MQTT
