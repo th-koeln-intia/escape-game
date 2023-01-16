@@ -17,7 +17,7 @@ Sind alle Geräte beigetreten, müssen sie noch in Node-RED eingefügt werden. D
 ## Display
 
 Falls nichts an dem Speicherort des Ordners "e-Paper" geändert wurde, kann dieser Schritt übersprungen werden. \
-Sonst muss der Pfad zu den einzelnen Dateien in jeder "Pythonshell in"-node, jeder "exec"-node und in den beiden "image speichern"-nodes angepasst werden.
+Sonst muss der Pfad zu den einzelnen Dateien in jeder "Pythonshell in"-node, jeder "exec"-node und in der "image speichern"-node angepasst werden.
 
 ## MQTT
 
