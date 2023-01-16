@@ -2,14 +2,17 @@
 
 from util import *
 
+import time
+
 if sys.version_info.major < 3:
     input = raw_input
 
+# Kommunikation mit Node-RED über stdin/stdout
 def main():
     epd.init()  
+
     # IP Adresse und Linien
-    
-    anfangsImage = initRaetsel(initStatus("Aktiv", "4", getIP()), "4", "Rot sehen",COLORED)
+    anfangsImage = initRaetsel(initStatus("Aktiv", "4", getIP()), "4", "Rot sehen", COLORED)
     epd.display_frame(anfangsImage.rotate(90, expand=True))
     time.sleep(WARTEN)
 
@@ -25,10 +28,12 @@ def main():
         while True:
             text = input("> ") 
             if (text.__contains__("stop")):
+                # Abbruch
                 epd.sleep()
                 print("Bye!")
                 break
             elif (text.__contains__("korrekt")):
+                # Wenn richtiger Farbwert gefunden wurde
                 draw.text(((epd.height/2), (epd.width/2)), "?",font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2), (epd.width/2)), "falsch" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2), (epd.width/2)), "Korrekt!" , font = font18, fill = COLORED)
@@ -38,6 +43,7 @@ def main():
                 print("Bye!")
                 break
             elif(text.__contains__("fehler")):
+                # Wenn Farbwert falsch ist
                 draw.text((((epd.height/2)), (epd.width/2)), "?",font = font18, fill = UNCOLORED)
                 draw.text((((epd.height/2)), (epd.width/2)), "falsch" , font = font18, fill = COLORED)
                 img=image.rotate(90, expand=True)

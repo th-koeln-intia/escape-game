@@ -1,6 +1,7 @@
 
 from util import *
 
+# Zeigt QR-Code und Adresse der Website ( IP_ADRESSE : 8082 ) an
 def main():
     epd.init()
     image=initStatus("Aktiv", "5", getIP()+":8082").convert("RGBA")

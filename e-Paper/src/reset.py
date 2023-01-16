@@ -1,5 +1,7 @@
 
 from util import *
+
+# Leert den Bildschirm
 def main():
     epd.init()
     image = Image.new('1', (epd.width, epd.height), 255)

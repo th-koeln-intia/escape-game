@@ -1,5 +1,6 @@
 from util import *
 
+# Zeigt Gratulationsbildschirm an
 def main():
         epd.init()
         image=initStatus("Aktiv", "5", getIP())

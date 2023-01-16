@@ -1,10 +1,12 @@
 # -*- coding: iso-8859-1 -*-
 from util import *
 
+import time
+
 if sys.version_info.major < 3:
     input = raw_input
 
-# leere kaestchen
+# Funktion zum generieren der leeren Kästchen
 def resetMorse(image):
     draw = ImageDraw.Draw(image)
     draw.rectangle((9, ((epd.width)/2)+14, 38, ((epd.width)/2)-15), outline = COLORED)
@@ -16,6 +18,7 @@ def resetMorse(image):
     draw.rectangle((225, ((epd.width)/2)+14,254, ((epd.width)/2)-15), outline = COLORED)
     return image
 
+# Kommunikation mit Node-RED über stdin/stdout
 def main():
 
     print("initializing...")
@@ -39,10 +42,13 @@ def main():
         while True:
             text = input("> ") 
             if (text.__contains__("stop")):
+                # Abbruch
                 epd.sleep()
                 print("Bye!")
                 break
+
             elif(text.__contains__("1")):
+                # Erstes Zeichen richtig
                 draw.text(((epd.height/2)-24, (epd.width/2)+36), "Fehler" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = COLORED)
                 draw.rectangle((19,((epd.width)/2)+1,28,((epd.width)/2)-1), fill = COLORED)
@@ -50,6 +56,7 @@ def main():
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
 
             elif(text.__contains__("2")):
+                # Zweites Zeichen richtig
                 draw.rectangle((59,((epd.width)/2)+1,62,((epd.width)/2)-1), fill = COLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = COLORED)
@@ -57,30 +64,39 @@ def main():
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
 
             elif(text.__contains__("3")):
+                # Drittes Zeichen richtig
                 draw.rectangle((91,((epd.width)/2)+1,100,((epd.width)/2)-1), fill = COLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = COLORED)
                 img=image.rotate(90, expand=True)
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
+
             elif(text.__contains__("4")):
+                # Viertes Zeichen richtig
                 draw.rectangle((131,((epd.width)/2)+1,134,((epd.width)/2)-1), fill = COLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = COLORED)
                 img=image.rotate(90, expand=True)
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
+
             elif(text.__contains__("5")):
+                # Fünftes Zeichen richtig
                 draw.rectangle((170,((epd.width)/2)+1,167,((epd.width)/2)-1), fill = COLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = COLORED)
                 img=image.rotate(90, expand=True)
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
+
             elif(text.__contains__("6")):
+                # Sechstes Zeichen richtig
                 draw.rectangle((199,((epd.width)/2)+1,208,((epd.width)/2)-1), fill = COLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = COLORED)
                 img=image.rotate(90, expand=True)
                 epd.display_partial_frame(img, 0, 0, epd.height, epd.width, fast=True)
+
             elif(text.__contains__("7")):
+                # Siebtes Zeichen richtig
                 draw.rectangle((239,((epd.width)/2)+1,242,((epd.width)/2)-1), fill=0)  
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Lang" , font = font18, fill = UNCOLORED)
                 draw.text(((epd.height/2)-16, (epd.width/2)+36), "Kurz" , font = font18, fill = COLORED)
@@ -90,6 +106,7 @@ def main():
                 break
             
             elif(text.__contains__("fehler")):
+                # Fehler bei der Eingabe
                 image=(initStatus("Aktiv", "3", getIP(),Image.open(os.path.join(picdir, 'leeresMorse.bmp'))))
                 draw= ImageDraw.Draw(image)
 
