@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 import socket, sys, os
 from PIL import Image, ImageFont, ImageDraw
 
