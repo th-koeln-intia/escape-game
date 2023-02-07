@@ -1,3 +1,5 @@
+# -*- coding: iso-8859-1 -*-
+
 from util import *
 
 # Zeigt Gratulationsbildschirm an
