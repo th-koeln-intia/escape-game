@@ -10,14 +10,9 @@ Falls nun noch Module fehlen werden diese von Node-RED angezeigt. \
 
 ## ZigBee2MQTT
 
-Rufe die ZigBee2MQTT Website auf. Falls an der Installation von Node-RED nichts geändert wurde, läuft diese über Port 8080. \
+Rufe die ZigBee2MQTT Website auf. Falls an der Installation nichts geändert wurde, läuft diese über Port 8080. \
 Klicke auf "Anlernen aktivieren". Nun können alle ZigBee Geräte dem Netzwerk beitreten. \
 Sind alle Geräte beigetreten, müssen sie noch in Node-RED eingefügt werden. Dafür müssen in allen Zigbee2MQTT Nodes die entsprechenden Geräte ausgewählt werden.
-
-## Display
-
-Falls nichts an dem Speicherort des Ordners "e-Paper" geändert wurde, kann dieser Schritt übersprungen werden. \
-Sonst muss der Pfad zu den einzelnen Dateien in jeder "Pythonshell in"-node, jeder "exec"-node und in der "image speichern"-node angepasst werden.
 
 ## MQTT
 
@@ -27,6 +22,10 @@ Sonst muss das Topic in den "MQTT-Out"-nodes in den Flows "Webpage" und "Rätsel
 ## Kiste
 
 In der Datei "util.py" im Verzeichnis "e-Paper/src" muss die Variable "IP_KISTE" angepasst werden. Dieser muss die IP-Adresse der Kiste zugewiesen werden.
+## Display
+
+Falls nichts an dem Speicherort des Ordners "e-Paper" geändert wurde, kann dieser Schritt übersprungen werden. \
+Sonst muss der Pfad zu den einzelnen Dateien in jeder "Pythonshell in"-node, jeder "exec"-node und in der "image speichern"-node angepasst werden.
 
 ## Fertigstellen
 
