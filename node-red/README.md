@@ -33,4 +33,9 @@ Klicke oben rechts auf die Schaltfläche **"Übernahme (deploy)"** \
 Wenn alle Module installiert sind erscheint die Meldung "Erfolgreich übernommen (deploy)" 
 
 Ob alle ZigBee2MQTT-Nodes sowie gegebenenfalls alle Pfade zum Display korrekt angepasst wurden, kann leider erst im Laufe des Spiels herausgefunden werden. Falls etwas vergessen wurde erscheint im "Debug"-Log eine Fehlermeldung. Der Debug-Log kann im rechten Reiter über die Schaltfläche mit dem Käfer aufgerufen werden. \
-Falls ein MQTT-Topic vergessen wurde läuft der Code problemlos. Nur die über das Topic gesteuerten Geräte reagieren nicht.
+Falls ein MQTT-Topic vergessen wurde läuft der Code problemlos. Nur die über das Topic gesteuerten Geräte reagieren nicht. 
+
+Ist alles Korrekt eingerichtet, muss noch die Sicherheitskopie aktualisiert werden. Dazu muss der gesamte Node-RED Code als JSON exportiert und unter dem Namen "flows_intia.json" in diesen Ordner gespeichert werden. Dabei wird die hier existierende Datei verworfen.  
+Rufe dazu den Node-RED Workspace auf und klicke auf die drei Striche links oben. Mit Klick auf Exportieren öffnen sich ein ein Menü. Wähle in diesem die Schaltfläche "Alle Flows" aus und klicke dann auf Exportieren. Es öffnet sich ein Dateimanager, in welchem der Speicherort festgelegt wird. 
+
+
